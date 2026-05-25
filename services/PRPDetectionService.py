@@ -25,3 +25,8 @@ def detect_repeated_brute_force_attempt_login(email, endpoint, ip_address, user_
 
 def detect_brute_force_attempt_login_locked(email):
     logger.critical(f"Critical: Brute Force attack detected: Email {email} has been temporarily locked due to multiple failed login attempts")
+
+max_report_payload = 10
+def detect_report_payload(report_request):
+    if len(report_request) > max_report_payload:
+        logger.warning(f"Possible attack detected: Report request payload size {len(report_request)} exceeds the maximum allowed {max_report_payload}")
