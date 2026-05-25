@@ -22,3 +22,6 @@ def detect_brute_force_attempt_login(email, endpoint, ip_address, user_agent, at
 
 def detect_repeated_brute_force_attempt_login(email, endpoint, ip_address, user_agent, attempt_count):
     logger.critical(f"Critical: Repeated Brute Force attack detected: Email {email} trying to access endpoint {endpoint} from IP {ip_address} with User-Agent {user_agent}. Attempts: {attempt_count}") 
+
+def detect_brute_force_attempt_login_locked(email):
+    logger.critical(f"Critical: Brute Force attack detected: Email {email} has been temporarily locked due to multiple failed login attempts")

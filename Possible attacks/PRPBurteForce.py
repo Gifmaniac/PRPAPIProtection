@@ -3,7 +3,7 @@ import os
 repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if repo_root not in sys.path:
     sys.path.insert(0, repo_root)
-from services.PRPDetectionService import detect_brute_force_attempt_login, detect_repeated_brute_force_attempt_login
+from services.PRPDetectionService import detect_brute_force_attempt_login, detect_brute_force_attempt_login_locked, detect_repeated_brute_force_attempt_login
 from security.PRPLoggingConfig import *
 from flask import Flask, request, jsonify
 
@@ -63,8 +63,11 @@ def secure_login_with_logging():
         detect_repeated_brute_force_attempt_login(email, endpoint, ip_address, user_agent, failed_login_attempts[email])
     else:
         detect_brute_force_attempt_login(email, endpoint, ip_address, user_agent, failed_login_attempts[email])
+        return jsonify({"error": "Invalid email or password"}), 401    
     
-    return jsonify({"error": "Invalid email or password"}), 401    
+    if failed_login_attempts[email] >= 5:
+        detect_brute_force_attempt_login_locked(email)
+        return jsonify({"error": "Account temporarily locked"}), 403
 
 if __name__ == '__main__':
     app.run(debug=True)

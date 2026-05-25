@@ -8,6 +8,7 @@ passwords = [
     "welcome",
     "admin",
     "secret123",
+    "admin1234",
     "admin123"
 ]
 
@@ -19,4 +20,3 @@ for password in passwords:
 
     print(f"Trying: {password}")
     print(response.text)
-    
