@@ -1,13 +1,9 @@
 import os
 import sys
 from flask import Flask, request, jsonify
-
-# Ensure the repo root is on sys.path so sibling packages can be imported when running
-# this script from its own folder.
 repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if repo_root not in sys.path:
     sys.path.insert(0, repo_root)
-
 from services.PRPDetectionService import detect_currency_mismatch, detect_insufficient_balance, detect_bola_attempt
 from security.PRPLoggingConfig import *
 
