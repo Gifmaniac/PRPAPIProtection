@@ -30,3 +30,14 @@ max_report_payload = 10
 def detect_report_payload(report_request):
     if len(report_request) > max_report_payload:
         logger.warning(f"Possible attack detected: Report request payload size {len(report_request)} exceeds the maximum allowed {max_report_payload}")
+
+
+def detect_excessive_access(user_id, user_permissions, required_permission, endpoint):
+    if required_permission not in user_permissions:
+        logger.warning(f"Possible attack detected: User {user_id} tried to access {endpoint} with permissions {user_permissions} trying to access resource requiring {required_permission}")
+    
+def detect_excessive_access(user_id, user_permissions, required_permission, endpoint):
+        logger.warning(f"Possible attack detected: User {user_id} tried to access {endpoint} with permissions {user_permissions} trying to access resource requiring {required_permission}")
+
+def detect_ban_user(user_id, endpoint, banned_user_id):
+    logger.critical(f"Account banned: User {user_id} accessed {endpoint} to bring the ban hammer to {banned_user_id}")
